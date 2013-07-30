@@ -32,10 +32,8 @@ To use Puppet Sandbox, you must have the following items installed and working:
 
 Puppet Sandbox has been designed for and tested with Vagrant base boxes running:
 
-* CentOS 6.3
-* CentOS 5.8
-* Ubuntu 12.04 - Precise Pangolin
-* Ubuntu 10.04 - Lucid Lynx
+* CentOS 6.4
+* CentOS 5.9
 
 ...although it may work just fine with other distributions/versions.
 
@@ -48,11 +46,12 @@ should be good to clone this repo and go:
 
     $ vagrant box list
     precise64
-    $ git clone git://github.com/elasticdog/puppet-sandbox.git
+    $ git clone git://github.com/minadyn/puppet-sandbox.git
     $ cd puppet-sandbox/
 
-If you want a CentOS base box to work from, I highly recommend the boxes
-published by Jan Vansteenkiste: http://packages.vstone.eu/vagrant-boxes/
+If you want a CentOS base box to work from, search here: http://www.vagrantbox.es/
+
+Once you add the box in vagrant, specify the box for a node by assigning the :box key in the puppet\_nodes variable in the Vagrantfile.
 
 Initial Startup
 ---------------
@@ -115,6 +114,17 @@ If you don't want to wait for the standard 30-minutes between Puppet runs by
 the agent daemon, you can easily force a manual run:
 
     [vagrant@client1 ~]$ sudo puppet agent --test
+
+Configuration
+-------------
+
+If you wish to edit the hostnames and IP addresses of the virtual machines, edit the hostname and ip values within the puppet\_nodes variable in the Vagrantfile.  You can also configure the ssh host port in puppet\_nodes.
+
+	$ puppet_nodes = [
+	    {:hostname => 'puppet',  :ip => '192.168.33.16', :box => 'my_centos64', :fwdhost => 8140, :fwdguest => 8140, :ram => 512, :ssh_port => 2210},
+	    {:hostname => 'client1', :ip => '192.168.33.17', :box => 'my_centos64', :ssh_port => 2211},
+	    {:hostname => 'client2', :ip => '192.168.33.18', :box => 'cent57', :ssh_port => 2212},
+	]
 
 License
 =======
